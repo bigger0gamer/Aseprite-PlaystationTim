@@ -19,7 +19,7 @@
 -- if true, the script will print debugging info to the console
 -- if false, it won't print anything to console
 -- Makes script extra laggy, and can cause crashes. Keep off unless you're working on the script
-local debugOutput = true
+local debugOutput = false
 
 -- "debugPrint", it just prints whatever it's passed if debugOutput is true
 function dbgP(consoleText)
