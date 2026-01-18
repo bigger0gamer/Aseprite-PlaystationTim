@@ -1,3 +1,10 @@
+-- This script sucks, even more than the import
+-- I wrote it all angry as fuck and stressed to get shit done as soon as possible
+-- dbgP("fuck hibo") indeed!
+-- anyways, I can't be bothered to do better, but I added 8bbp support!
+-- This pair of scripts is functionally complete ig
+
+
 -- Export .tim by Yuri Bacon
 --  An Aseprite lua script that exports the current sprite / palette to a PlayStation .tim file
 --   Intended to export projects originally imported from a .tim with a matching Import .tim script
@@ -12,7 +19,7 @@
 -- if true, the script will print debugging info to the console
 -- if false, it won't print anything to console
 -- Makes script extra laggy, and can cause crashes. Keep off unless you're working on the script
-local debugOutput = false
+local debugOutput = true
 
 -- "debugPrint", it just prints whatever it's passed if debugOutput is true
 function dbgP(consoleText)
@@ -84,11 +91,11 @@ if expDlg.data.expBtn then -- if user pressed cancel, script ends here
   if(timTable.clutBit) then
     modeByte = modeByte + 8
   end
-  if(timTable.bitsPerPixel == 8) then
+  if(timTable.bbp == 8) then
     modeByte = modeByte + 1
-  elseif(timTable.bitsPerPixel == 16) then
+  elseif(timTable.bbp == 16) then
     modeByte = modeByte + 2
-  elseif(timTable.bitsPerPixel == 24) then
+  elseif(timTable.bbp == 24) then
     modeByte = modeByte + 3
   end
   timString = timString .. string.char(modeByte, 0, 0, 0)
@@ -176,15 +183,24 @@ if expDlg.data.expBtn then -- if user pressed cancel, script ends here
   
   
   --imagedata TODO
+  dbgP(timTable.bbp)
   local fuckshit = Image(sprite)
   --dbgP("stride " .. fuckshit.rowStride)
   --dbgP(fuckshit.width .. " " .. fuckshit.height)
   --dbgP(string.byte(string.sub(fuckshit.bytes, 0, 0)))
   --dbgP(string.byte(string.sub(fuckshit.bytes, 0, 1)))
-  for w = 1, (fuckshit.width * fuckshit.height), 2 do
-    byte1 = string.byte(fuckshit.bytes, w) + (string.byte(fuckshit.bytes, w + 1) << 4)
-    dbgP(string.byte(fuckshit.bytes, w) .. " " .. string.byte(fuckshit.bytes, w + 1) .. " " .. byte1 )
-    timString = timString .. string.char(byte1)
+  if(timTable.bbp == 4) then
+    for w = 1, (fuckshit.width * fuckshit.height), 2 do
+      byte1 = string.byte(fuckshit.bytes, w) + (string.byte(fuckshit.bytes, w + 1) << 4)
+      dbgP(string.byte(fuckshit.bytes, w) .. " " .. string.byte(fuckshit.bytes, w + 1) .. " " .. byte1 )
+      timString = timString .. string.char(byte1)
+    end
+  elseif(timTable.bbp == 8) then
+    for w = 1, (fuckshit.width * fuckshit.height), 1 do
+      byte1 = string.byte(fuckshit.bytes, w)
+      dbgP(string.byte(fuckshit.bytes, w) .. " " .. byte1)
+      timString = timString .. string.char(byte1)
+    end
   end
   
   
