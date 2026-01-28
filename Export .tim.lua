@@ -1,6 +1,6 @@
 -- This script sucks, even more than the import
 -- I wrote it all angry as fuck and stressed to get shit done as soon as possible
--- dbgP("fuck hibo") indeed!
+-- dbgP("fuck [redacted]") indeed!
 -- anyways, I can't be bothered to do better, but I added 8bbp support!
 -- This pair of scripts is functionally complete ig
 
@@ -79,7 +79,7 @@ if expDlg.data.expBtn then -- if user pressed cancel, script ends here
   end
   if(jsonFile ~= nil) then
     local jsonData = jsonFile:read("a")
-    dbgP("fuck hibo")
+    dbgP("loading json...")
     jsonFile:close()
     timTable = json.decode(jsonData)
   end
